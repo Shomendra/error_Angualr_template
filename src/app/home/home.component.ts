@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BlogService } from "../blog.service";
-import {BlogHttpService} from "../blog-http.service";
+import { BlogHttpService } from "../blog-http.service";
 import { CompileShallowModuleMetadata } from '@angular/compiler';
 // decorator
 @Component({
@@ -10,7 +10,8 @@ import { CompileShallowModuleMetadata } from '@angular/compiler';
 })
 // a simple class
 export class HomeComponent implements OnInit, OnDestroy {
-  public allBlogs ;
+
+  public allBlogs = [];
 
   constructor(public blogHttpService: BlogHttpService) {
     console.log("Home component constructor called");
@@ -23,25 +24,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     //this.allBlogs = this.blogHttpService.getAllBlogs();
     this.allBlogs = this.blogHttpService.getAllBlogs().subscribe(
-    
-        data =>{
-          Console.log("logging data")
-          console.log(data);
-          this.allBlogs = data["data"];
-        },
-        error =>{
-           console.log("some error occured");
-           console.log(error.errorMessage)
-        }
-      
-  }
-  console.log(this.allBlogs);
 
+      data => {
+        console.log("logging data")
+        console.log(data);
+        this.allBlogs = data["data"];
+      },
+      error => {
+        console.log("some error occured");
+        console.log(error.errorMessage)
+      }
+
+    )
+    console.log(this.allBlogs);
+  }
 
   ngOnDestroy() {
     console.log("Home component destroyed");
   }
 }
+
 
 
 
