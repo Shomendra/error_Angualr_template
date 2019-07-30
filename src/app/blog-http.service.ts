@@ -5,9 +5,8 @@ import {HttpClient,HttpErrorResponse} from  '@angular/common/http';
 
 
 // import observable related code.
-import { Observable } from "rxjs";
+import { observable } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
-
 
 
 @Injectable({
@@ -17,36 +16,40 @@ export class BlogHttpService {
 public allBlogs;
 public currentBlog;
 public baseUrl = 'https://blogapp.edwisor.com/api/v1/blogs';
-public authToken = '/all?authToken=NTZmZDVkOWU4MWEyNmY3MjgwOGQ1MTZiYjIxYmFkMDhlMGM4MzUzZWJmNGY1MjlkMWZhMTI3MmNhNmE5ZTkzZTYzODc2MDg0YWNmMGEzYWJjOTYwYjdjZDcyNmViYjk5N2UyOTk4MjhlYmE1Y2NkNDc1YjY2OTQ4M2VmNjM2NjljYw=='
+public authToken = 'NTY2NzIxMTIxZmVhOGZlNDU0NDgzNmQ1ZjU5ZDljMWU4ODNmZTFiNjFjYzNiY2JhM2MyNDQ5NmE2OTQyOGU4ZWM1MDEzMDUxMDZhMDM1MmRmYjk2ZjRlMzgzMDlmNzA2M2RlZDY0NWIyOWU1Yzg1ZmUyYWMwZTJmMDA0NzQxZDkxNw=='
 
   constructor(private _http:HttpClient) {
     console.log("blog-http service was called");
    }
-
-  private handleError(err : HttpErrorResponse){
-    console.log("Handle error Http calls");
-    console.log(err.message);
-    return Observable.throw(err.message)
-  
+    
+  // Exception Handler
+  private handleError(err: HttpErrorResponse){
+   console.log("Handle error Http calls")
+   console.log(err.message);
+   return observable.throw(err.message)
+   
   }
 
-   public getAllBlogs(): any{
-     let myResponse = this._http.get(this.baseUrl+'/all?authToken=NTZmZDVkOWU4MWEyNmY3MjgwOGQ1MTZiYjIxYmFkMDhlMGM4MzUzZWJmNGY1MjlkMWZhMTI3MmNhNmE5ZTkzZTYzODc2MDg0YWNmMGEzYWJjOTYwYjdjZDcyNmViYjk5N2UyOTk4MjhlYmE1Y2NkNDc1YjY2OTQ4M2VmNjM2NjljYw==' + this.authToken );
+   
+
+
+    // method to return sll blog
+  
+    public getAllBlogs(): any {
+     let myResponse = this._http.get(this.baseUrl+'/all?authToken='+this.authToken );
      console.log(myResponse);
      return myResponse;
     
    }
     
 
-  
-// method to get a perticular blog
-
-  public getSingleBlogInformation(currentBlogId): any {
+    // method to get a perticular blog
+    public getSingleBlogInformation(currentBlogId): any {
     // using a for of loop here from type script
-  let myResponse = this._http.get(this.baseUrl + '/view'+'/'+ currentBlogId + '?authToken=' + this.authToken )
-  return myResponse;
+        let myResponse = this._http.get(this.baseUrl + '/view' + '/' + currentBlogId + '?authToken=' + this.authToken )
+        return myResponse;
 
-  }// end get blog informaion function
+    }// end get blog informaion function
 
 }
 
